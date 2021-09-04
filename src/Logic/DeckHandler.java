@@ -20,7 +20,8 @@ public class DeckHandler {
         return this.cardList.get(randomIndex);
     }
 
-    public void addToDeck(StudyCard card) {
+    public void addToDeck(String question, String answer, String difficulty) {
+        StudyCard card = new StudyCard(question, answer, difficulty);
         this.cardList.add(card);
     }
 
