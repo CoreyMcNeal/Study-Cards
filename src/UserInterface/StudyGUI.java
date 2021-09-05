@@ -40,6 +40,7 @@ public class StudyGUI implements ActionListener {
     private JLabel introDifficultyLabel;
     private JComboBox<String> introDifficultyBox;
     private JButton introAddButton;
+    private JButton introClearButton;
     private JLabel introChooseLabel;
     private JComboBox<String> introChooseBox;
     private JButton introFinishedButton;
@@ -68,7 +69,7 @@ public class StudyGUI implements ActionListener {
         frame.add(introPanel, BorderLayout.CENTER);
         frame.setTitle("Study Cards");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 600);
+        frame.setSize(400, 700);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
@@ -138,31 +139,42 @@ public class StudyGUI implements ActionListener {
         introPanel.add(introAddButton, introConstraints);
 
         JLabel spacer3 = new JLabel("");
-        spaceMaker(spacer3, 0, 10, 15);
+        spaceMaker(spacer3, 0, 10, 10);
 
-        introChooseLabel = new JLabel("Choose cards to study:");
+        introClearButton = new JButton("Clear Entries");
+        introClearButton.addActionListener(this);
+        //finish button creation
         introConstraints.gridx = 0;
-        introConstraints.gridy = 11;
-        introPanel.add(introChooseLabel, introConstraints);
+        introConstraints.gridy= 11;
+        introClearButton.setPreferredSize(new Dimension(150, 75));
+        introPanel.add(introClearButton, introConstraints);
 
         JLabel spacer4 = new JLabel("");
         spaceMaker(spacer4, 0, 12, 15);
+
+        introChooseLabel = new JLabel("Choose cards to study:");
+        introConstraints.gridx = 0;
+        introConstraints.gridy = 13;
+        introPanel.add(introChooseLabel, introConstraints);
+
+        JLabel spacer5 = new JLabel("");
+        spaceMaker(spacer5, 0, 14, 15);
         
         String[] chosenDifficulty = {"Easy", "Moderate", "Hard", "All"};
         introChooseBox = new JComboBox<String>(chosenDifficulty);
         introConstraints.gridx = 0;
-        introConstraints.gridy = 13;
+        introConstraints.gridy = 15;
         introChooseBox.setPreferredSize(new Dimension(200, 20));
         introPanel.add(introChooseBox, introConstraints);
 
-        JLabel spacer5 = new JLabel("");
-        spaceMaker(spacer5, 0, 14, 15);
+        JLabel spacer6 = new JLabel("");
+        spaceMaker(spacer6, 0, 16, 15);
 
         introFinishedButton = new JButton("Start Studying");
         introFinishedButton.addActionListener(this);
         introFinishedButton.setEnabled(false);
         introConstraints.gridx = 0;
-        introConstraints.gridy = 15;
+        introConstraints.gridy = 17;
         introFinishedButton.setPreferredSize(new Dimension(200, 100));
         introPanel.add(introFinishedButton, introConstraints);
     }
