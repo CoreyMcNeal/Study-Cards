@@ -40,6 +40,7 @@ public class StudyGUI implements ActionListener {
     private JLabel introDifficultyLabel;
     private JComboBox<String> introDifficultyBox;
     private JButton introAddButton;
+    private JButton introShowButton;
     private JButton introClearButton;
     private JLabel introChooseLabel;
     private JComboBox<String> introChooseBox;
@@ -69,7 +70,7 @@ public class StudyGUI implements ActionListener {
         frame.add(introPanel, BorderLayout.CENTER);
         frame.setTitle("Study Cards");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 700);
+        frame.setSize(400, 800);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
@@ -141,41 +142,50 @@ public class StudyGUI implements ActionListener {
         JLabel spacer3 = new JLabel("");
         spaceMaker(spacer3, 0, 10, 10);
 
+        introShowButton = new JButton("Show Entries");
+        introShowButton.addActionListener(this);
+        introConstraints.gridx = 0;
+        introConstraints.gridy = 11;
+        introShowButton.setPreferredSize(new Dimension(150, 75));
+        introPanel.add(introShowButton, introConstraints);
+
+        JLabel spacer4 = new JLabel("");
+        spaceMaker(spacer4, 0, 12, 10);
+
         introClearButton = new JButton("Clear Entries");
         introClearButton.addActionListener(this);
-        //finish button creation
         introConstraints.gridx = 0;
-        introConstraints.gridy= 11;
+        introConstraints.gridy = 13;
         introClearButton.setPreferredSize(new Dimension(150, 75));
         introPanel.add(introClearButton, introConstraints);
 
-        JLabel spacer4 = new JLabel("");
-        spaceMaker(spacer4, 0, 12, 15);
+        JLabel spacer5 = new JLabel("");
+        spaceMaker(spacer5, 0, 14, 15);
 
         introChooseLabel = new JLabel("Choose cards to study:");
         introConstraints.gridx = 0;
-        introConstraints.gridy = 13;
+        introConstraints.gridy = 15;
         introPanel.add(introChooseLabel, introConstraints);
 
-        JLabel spacer5 = new JLabel("");
-        spaceMaker(spacer5, 0, 14, 15);
+        JLabel spacer6 = new JLabel("");
+        spaceMaker(spacer6, 0, 16, 15);
         
         String[] chosenDifficulty = {"Easy", "Moderate", "Hard", "All"};
         introChooseBox = new JComboBox<String>(chosenDifficulty);
         introConstraints.gridx = 0;
-        introConstraints.gridy = 15;
+        introConstraints.gridy = 17;
         introChooseBox.setPreferredSize(new Dimension(200, 20));
         introPanel.add(introChooseBox, introConstraints);
 
-        JLabel spacer6 = new JLabel("");
-        spaceMaker(spacer6, 0, 16, 15);
+        JLabel spacer7 = new JLabel("");
+        spaceMaker(spacer7, 0, 18, 15);
 
         introFinishedButton = new JButton("Start Studying");
         introFinishedButton.addActionListener(this);
         introFinishedButton.setEnabled(false);
         introConstraints.gridx = 0;
-        introConstraints.gridy = 17;
-        introFinishedButton.setPreferredSize(new Dimension(200, 100));
+        introConstraints.gridy = 19;
+        introFinishedButton.setPreferredSize(new Dimension(300, 125));
         introPanel.add(introFinishedButton, introConstraints);
     }
 
@@ -184,7 +194,7 @@ public class StudyGUI implements ActionListener {
         studyPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 10, 30));
         studyPanel.setLayout(new GridBagLayout());
         studyConstraints = new GridBagConstraints();
-
+        
         studyCardNumber = new JLabel("");
         studyCardNumber.setVerticalAlignment(SwingConstants.TOP);
         studyCardNumber.setHorizontalAlignment(SwingConstants.CENTER);
@@ -198,7 +208,6 @@ public class StudyGUI implements ActionListener {
 
         studyQuestionAndAnswer = new JLabel("");
         studyQuestionAndAnswer.setPreferredSize(new Dimension(100, 300));
-        //Needs to be centered, and start off as the question until the flip button is clicked, changing it to the answer.
         studyConstraints.gridx = 0;
         studyConstraints.gridy = 2;
         studyPanel.add(studyQuestionAndAnswer, studyConstraints);
@@ -283,6 +292,13 @@ public class StudyGUI implements ActionListener {
     public void actionPerformed(ActionEvent e) {                                        //Button events for the UI.
         if (e.getSource() == introAddButton) {
             checkEntry(introQuestionEntry.getText(), introAnswerEntry.getText(), introDifficultyBox.getSelectedItem().toString());
+
+        } else if (e.getSource() == introShowButton) {
+            StringBuilder entries = new StringBuilder();
+            deckHandler.getAllCardList().stream()
+                                        .forEach(entry -> entries.append("Q:" + entry.getQuestion() + "\n" +
+                                                                        "A: " + entry.getAnswer() + "\n\n"));
+            JOptionPane.showMessageDialog(null, entries);
 
         } else if (e.getSource() == introFinishedButton) {
             cardListChooser();
