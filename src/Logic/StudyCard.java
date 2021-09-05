@@ -28,7 +28,6 @@ public class StudyCard {
         this.answer = answer;
     }
 
-
     public String getDifficulty() {
         return this.difficulty;
     }
