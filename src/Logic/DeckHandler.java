@@ -1,15 +1,16 @@
 package Logic;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
 public class DeckHandler {
     
-    private List<StudyCard> allCardList;
-    private List<StudyCard> easyCardList;
-    private List<StudyCard> modCardList;
-    private List<StudyCard> hardCardList;
+    private List<StudyCard> allCardList = new ArrayList<>();
+    private List<StudyCard> easyCardList = new ArrayList<>();
+    private List<StudyCard> modCardList = new ArrayList<>();
+    private List<StudyCard> hardCardList = new ArrayList<>();
 
     public StudyCard pullCard() {
         Random draw = new Random();
