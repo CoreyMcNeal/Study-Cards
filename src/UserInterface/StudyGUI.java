@@ -12,13 +12,18 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import Logic.DeckHandler;
+
 public class StudyGUI implements ActionListener{
     
+    private DeckHandler deckHandler = new DeckHandler();
+
     private JFrame frame;
 
     private JPanel introPanel;
@@ -140,9 +145,21 @@ public class StudyGUI implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == introAddButton) {
-            introFinishedButton.setEnabled(true);
-
+            checkEntry(introQuestionEntry.getText(), introAnswerEntry.getText(), introDifficultyBox.getSelectedItem().toString());
         }
         
+    }
+
+    private void checkEntry(String question, String answer, String difficulty) {
+        if (introQuestionEntry.getText().isBlank() || introAnswerEntry.getText().isBlank()) {
+            JOptionPane.showMessageDialog(null, "Cannot leave question or answer blank");
+            return;
+        }
+
+        introFinishedButton.setEnabled(true);
+        deckHandler.addToDeck(question, answer, difficulty);
+        introQuestionEntry.setText("");
+        introAnswerEntry.setText("");
+        introDifficultyBox.setSelectedIndex(0);
     }
 }
