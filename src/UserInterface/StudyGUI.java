@@ -27,6 +27,7 @@ public class StudyGUI implements ActionListener {
     
     private DeckHandler deckHandler = new DeckHandler();
     private List<StudyCard> chosenDeck = new ArrayList<>();
+    private int deckIndex;
 
     private JFrame frame;                                           // Swing components for the GUI
 
@@ -207,8 +208,8 @@ public class StudyGUI implements ActionListener {
         JLabel spacer1 = new JLabel("");
         spaceMaker(spacer1, 0, 1, 15);
 
-        studyQuestionAndAnswer = new JLabel("");
-        studyQuestionAndAnswer.setPreferredSize(new Dimension(100, 300));
+        studyQuestionAndAnswer = new JLabel("", SwingConstants.CENTER);
+        studyQuestionAndAnswer.setPreferredSize(new Dimension(500, 500));
         studyConstraints.gridx = 0;
         studyConstraints.gridy = 2;
         studyPanel.add(studyQuestionAndAnswer, studyConstraints);
@@ -254,23 +255,6 @@ public class StudyGUI implements ActionListener {
         introPanel.add(spacer, introConstraints);
     }
 
-    private void cardListChooser() {                                // Decides what deck to give to user based on difficulty chosen in the combobox
-        deckHandler.shuffleDecks();
-        if (introChooseBox.getSelectedItem().equals("Easy")) {
-            chosenDeck = deckHandler.getEasyCardList();
-
-        } else if (introChooseBox.getSelectedItem().equals("Moderate")) {
-            chosenDeck = deckHandler.getModCardList();
-            
-        } else if (introChooseBox.getSelectedItem().equals("Hard")) {
-            chosenDeck = deckHandler.getHardCardList();
-
-        } else if (introChooseBox.getSelectedItem().equals("All")) {
-            chosenDeck = deckHandler.getAllCardList();
-
-        }
-    }
-
     private void refreshFrame() {                                                       // Method to refresh the frame, to make sure changes are shown
         frame.validate();
         frame.repaint();
@@ -288,20 +272,17 @@ public class StudyGUI implements ActionListener {
             deckHandler.clearLists();
 
         } else if (e.getSource() == introFinishedButton) {
-            cardListChooser();
-            frame.remove(introPanel);
-            frame.add(studyPanel);
-            frame.setSize(600, 750);
-            refreshFrame();
-            // Gotta add the start of iterating through the list somewhere here 
+            transitionToStudyPanel();
+            
 
         } else if (e.getSource() == studyFlipButton) {
-            //Code to switch to answer goes here
+            studyFlipPressed();
 
         } else if (e.getSource() == studyNextButton) {
             //Code to continue to next card goes here
 
         } else if (e.getSource() == studyPreviousbutton) {
+            //Code to go back to previous card goes here
 
         } else if (e.getSource() == studyExitButton) {
             frame.remove(studyPanel);
@@ -314,18 +295,52 @@ public class StudyGUI implements ActionListener {
         
     }
 
-    private void checkEntry(String question, String answer, String difficulty) {                    //Checks user entry to make sure it's not blank. Adds users chosen variables into the deck if successful, and
-    if (introQuestionEntry.getText().isBlank() || introAnswerEntry.getText().isBlank()) {       //resets the boxes.
-        JOptionPane.showMessageDialog(null, "Cannot leave question or answer blank");
-        return;
+    private void studyFlipPressed() {
+        studyQuestionAndAnswer.setText("Answer: " + chosenDeck.get(deckIndex).getAnswer());
     }
 
-    introFinishedButton.setEnabled(true);
-    deckHandler.addToDeck(question, answer, difficulty);
-    introQuestionEntry.setText("");
-    introAnswerEntry.setText("");
-    introDifficultyBox.setSelectedIndex(0);
-}
+    private void transitionToStudyPanel() {                         // Chooses appropriate deck and sets the studyPanel to the frame. Prepares the labels for the correct indexes as well
+        cardListChooser();
+        frame.remove(introPanel);
+        frame.add(studyPanel);
+        frame.setSize(600, 750);
+
+        deckIndex = 0;
+        studyCardNumber.setText( "Card Number: " + String.valueOf(deckIndex + 1));
+        studyQuestionAndAnswer.setText("<html><p>" + "Question: " + chosenDeck.get(deckIndex).getQuestion() + "</p></html>");
+        
+        refreshFrame();
+    }
+
+    private void cardListChooser() {                                // Decides what deck to give to user based on difficulty chosen in the combobox
+        deckHandler.shuffleDecks();
+        if (introChooseBox.getSelectedItem().equals("Easy")) {
+            chosenDeck = deckHandler.getEasyCardList();
+
+        } else if (introChooseBox.getSelectedItem().equals("Moderate")) {
+            chosenDeck = deckHandler.getModCardList();
+            
+        } else if (introChooseBox.getSelectedItem().equals("Hard")) {
+            chosenDeck = deckHandler.getHardCardList();
+
+        } else if (introChooseBox.getSelectedItem().equals("All")) {
+            chosenDeck = deckHandler.getAllCardList();
+
+        }
+    }
+
+    private void checkEntry(String question, String answer, String difficulty) {                    //Checks user entry to make sure it's not blank. Adds users chosen variables into the deck if successful, and
+        if (introQuestionEntry.getText().isBlank() || introAnswerEntry.getText().isBlank()) {       //resets the boxes.
+            JOptionPane.showMessageDialog(null, "Cannot leave question or answer blank");
+            return;
+        }
+
+        introFinishedButton.setEnabled(true);
+        deckHandler.addToDeck(question, answer, difficulty);
+        introQuestionEntry.setText("");
+        introAnswerEntry.setText("");
+        introDifficultyBox.setSelectedIndex(0);
+    }
 
     private void introShowButtonClicked() {
         if (deckHandler.getAllCardList().size() == 0) {
@@ -335,7 +350,7 @@ public class StudyGUI implements ActionListener {
 
         StringBuilder entries = new StringBuilder();
         deckHandler.getAllCardList().stream()
-                                    .forEach(entry -> entries.append("Q:" + entry.getQuestion() + "\n" +
+                                    .forEach(entry -> entries.append("Q: " + entry.getQuestion() + "\n" +
                                                                     "A: " + entry.getAnswer() + "\n\n"));
         JOptionPane.showMessageDialog(null, entries);
     }
