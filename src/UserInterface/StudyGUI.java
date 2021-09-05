@@ -253,19 +253,6 @@ public class StudyGUI implements ActionListener {
         introPanel.add(spacer, introConstraints);
     }
 
-    private void checkEntry(String question, String answer, String difficulty) {                    //Checks user entry to make sure it's not blank. Adds users chosen variables into the deck if successful, and
-        if (introQuestionEntry.getText().isBlank() || introAnswerEntry.getText().isBlank()) {       //resets the boxes.
-            JOptionPane.showMessageDialog(null, "Cannot leave question or answer blank");
-            return;
-        }
-
-        introFinishedButton.setEnabled(true);
-        deckHandler.addToDeck(question, answer, difficulty);
-        introQuestionEntry.setText("");
-        introAnswerEntry.setText("");
-        introDifficultyBox.setSelectedIndex(0);
-    }
-
     private void cardListChooser() {                                // Decides what deck to give to user based on difficulty chosen in the combobox
         deckHandler.shuffleDecks();
         if (introChooseBox.getSelectedItem().equals("Easy")) {
@@ -294,11 +281,10 @@ public class StudyGUI implements ActionListener {
             checkEntry(introQuestionEntry.getText(), introAnswerEntry.getText(), introDifficultyBox.getSelectedItem().toString());
 
         } else if (e.getSource() == introShowButton) {
-            StringBuilder entries = new StringBuilder();
-            deckHandler.getAllCardList().stream()
-                                        .forEach(entry -> entries.append("Q:" + entry.getQuestion() + "\n" +
-                                                                        "A: " + entry.getAnswer() + "\n\n"));
-            JOptionPane.showMessageDialog(null, entries);
+            introShowButtonClicked();
+
+        } else if (e.getSource() == introClearButton) {
+            deckHandler.clearLists();
 
         } else if (e.getSource() == introFinishedButton) {
             cardListChooser();
@@ -319,5 +305,31 @@ public class StudyGUI implements ActionListener {
 
         }
         
+    }
+
+    private void checkEntry(String question, String answer, String difficulty) {                    //Checks user entry to make sure it's not blank. Adds users chosen variables into the deck if successful, and
+    if (introQuestionEntry.getText().isBlank() || introAnswerEntry.getText().isBlank()) {       //resets the boxes.
+        JOptionPane.showMessageDialog(null, "Cannot leave question or answer blank");
+        return;
+    }
+
+    introFinishedButton.setEnabled(true);
+    deckHandler.addToDeck(question, answer, difficulty);
+    introQuestionEntry.setText("");
+    introAnswerEntry.setText("");
+    introDifficultyBox.setSelectedIndex(0);
+}
+
+    private void introShowButtonClicked() {
+        if (deckHandler.getAllCardList().size() == 0) {
+            JOptionPane.showMessageDialog(null, "Nothing has been entered yet");
+            return;
+        }
+
+        StringBuilder entries = new StringBuilder();
+        deckHandler.getAllCardList().stream()
+                                    .forEach(entry -> entries.append("Q:" + entry.getQuestion() + "\n" +
+                                                                    "A: " + entry.getAnswer() + "\n\n"));
+        JOptionPane.showMessageDialog(null, entries);
     }
 }

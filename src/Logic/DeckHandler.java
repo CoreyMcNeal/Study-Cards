@@ -39,6 +39,12 @@ public class DeckHandler {
         Collections.shuffle(hardCardList);
     }
 
+    public void clearLists() {
+        allCardList.clear();
+        easyCardList.clear();
+        modCardList.clear();
+        hardCardList.clear();
+    }
 
     public List<StudyCard> getAllCardList() {
         return this.allCardList;
