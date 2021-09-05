@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
@@ -50,7 +51,7 @@ public class StudyGUI implements ActionListener {
     private JPanel studyPanel;
     private GridBagConstraints studyConstraints;
     private JLabel studyCardNumber;
-    private JLabel studyQuestionAndAnswer;
+    private JTextArea studyQuestionAndAnswer;
     private JButton studyFlipButton;
     private JButton studyNextButton;
     private JButton studyPreviousbutton;
@@ -208,8 +209,9 @@ public class StudyGUI implements ActionListener {
         JLabel spacer1 = new JLabel("");
         spaceMaker(spacer1, 0, 1, 15);
 
-        studyQuestionAndAnswer = new JLabel("", SwingConstants.CENTER);
-        studyQuestionAndAnswer.setPreferredSize(new Dimension(500, 500));
+        studyQuestionAndAnswer = new JTextArea("");
+        studyQuestionAndAnswer.setSize(500, 50);
+        studyQuestionAndAnswer.setLineWrap(true);
         studyConstraints.gridx = 0;
         studyConstraints.gridy = 2;
         studyPanel.add(studyQuestionAndAnswer, studyConstraints);
@@ -277,7 +279,7 @@ public class StudyGUI implements ActionListener {
 
         } else if (e.getSource() == studyFlipButton) {
             studyFlipPressed();
-
+            
         } else if (e.getSource() == studyNextButton) {
             //Code to continue to next card goes here
 
@@ -307,7 +309,7 @@ public class StudyGUI implements ActionListener {
 
         deckIndex = 0;
         studyCardNumber.setText( "Card Number: " + String.valueOf(deckIndex + 1));
-        studyQuestionAndAnswer.setText("<html><p>" + "Question: " + chosenDeck.get(deckIndex).getQuestion() + "</p></html>");
+        studyQuestionAndAnswer.setText("Question: " + chosenDeck.get(deckIndex).getQuestion());
         
         refreshFrame();
     }
