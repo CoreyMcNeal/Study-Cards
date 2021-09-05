@@ -96,6 +96,7 @@ public class StudyGUI implements ActionListener {
         introPanel.add(introQuestionLabel, introConstraints);
 
         introQuestionEntry = new JTextField();
+        introQuestionEntry.requestFocus();
         introConstraints.gridx = 0;
         introConstraints.gridy = 2;
         introQuestionEntry.setPreferredSize(new Dimension(200, 20));
@@ -292,6 +293,7 @@ public class StudyGUI implements ActionListener {
             frame.add(studyPanel);
             frame.setSize(600, 750);
             refreshFrame();
+            // Gotta add the start of iterating through the list somewhere here 
 
         } else if (e.getSource() == studyFlipButton) {
             //Code to switch to answer goes here
@@ -302,6 +304,11 @@ public class StudyGUI implements ActionListener {
         } else if (e.getSource() == studyPreviousbutton) {
 
         } else if (e.getSource() == studyExitButton) {
+            frame.remove(studyPanel);
+            frame.add(introPanel);
+            frame.setSize(400, 800);
+            introQuestionEntry.requestFocus();
+            refreshFrame();
 
         }
         
