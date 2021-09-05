@@ -99,6 +99,7 @@ public class StudyGUI implements ActionListener {
 
         introQuestionEntry = new JTextField();
         introQuestionEntry.requestFocus();
+        introQuestionEntry.addActionListener(this);
         introConstraints.gridx = 0;
         introConstraints.gridy = 2;
         introQuestionEntry.setPreferredSize(new Dimension(200, 20));
@@ -111,6 +112,7 @@ public class StudyGUI implements ActionListener {
         introPanel.add(introAnswerLabel, introConstraints);
 
         introAnswerEntry = new JTextField();
+        introAnswerEntry.addActionListener(this);
         introConstraints.gridx = 0;
         introConstraints.gridy = 4;
         introAnswerEntry.setPreferredSize(new Dimension(200, 20));
@@ -201,7 +203,6 @@ public class StudyGUI implements ActionListener {
         studyCardNumber = new JLabel("");
         studyCardNumber.setVerticalAlignment(SwingConstants.TOP);
         studyCardNumber.setHorizontalAlignment(SwingConstants.CENTER);
-        //Needs to go on top, with a number representing which card in the set its on
         studyConstraints.gridx = 0;
         studyConstraints.gridy = 0;
         studyPanel.add(studyCardNumber, studyConstraints);
@@ -264,8 +265,11 @@ public class StudyGUI implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {                                        //Button events for the UI.
-        if (e.getSource() == introAddButton) {
+        if (e.getSource() == introAddButton || e.getSource() == introAnswerEntry) {
             checkEntry(introQuestionEntry.getText(), introAnswerEntry.getText(), introDifficultyBox.getSelectedItem().toString());
+
+        } else if (e.getSource() == introQuestionEntry) {
+            introAnswerEntry.requestFocus();
 
         } else if (e.getSource() == introShowButton) {
             introShowButtonClicked();
@@ -281,7 +285,7 @@ public class StudyGUI implements ActionListener {
             studyFlipPressed();
             
         } else if (e.getSource() == studyNextButton) {
-            //Code to continue to next card goes here
+            studyNextPressed();
 
         } else if (e.getSource() == studyPreviousbutton) {
             //Code to go back to previous card goes here
@@ -297,6 +301,15 @@ public class StudyGUI implements ActionListener {
         
     }
 
+    private void studyNextPressed() {
+        deckIndex += 1;
+
+        studyCardNumber.setText( "Card Number: " + String.valueOf(deckIndex + 1));
+        studyQuestionAndAnswer.setText("Question: " + chosenDeck.get(deckIndex).getQuestion());
+
+        refreshFrame();
+    }
+
     private void studyFlipPressed() {
         studyQuestionAndAnswer.setText("Answer: " + chosenDeck.get(deckIndex).getAnswer());
     }
@@ -309,6 +322,7 @@ public class StudyGUI implements ActionListener {
 
         deckIndex = 0;
         studyCardNumber.setText( "Card Number: " + String.valueOf(deckIndex + 1));
+        System.out.println(chosenDeck.get(deckIndex).getQuestion());
         studyQuestionAndAnswer.setText("Question: " + chosenDeck.get(deckIndex).getQuestion());
         
         refreshFrame();
@@ -342,6 +356,7 @@ public class StudyGUI implements ActionListener {
         introQuestionEntry.setText("");
         introAnswerEntry.setText("");
         introDifficultyBox.setSelectedIndex(0);
+        introQuestionEntry.requestFocus();
     }
 
     private void introShowButtonClicked() {
