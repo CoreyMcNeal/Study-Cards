@@ -32,7 +32,7 @@ public class DeckHandler {
         }
     }
 
-    public void shuffleDeck() {
+    public void shuffleDecks() {
         Collections.shuffle(allCardList);
         Collections.shuffle(easyCardList);
         Collections.shuffle(modCardList);
