@@ -7,25 +7,26 @@ import java.util.Random;
 
 public class DeckHandler {
     
-    private List<StudyCard> cardList;
+    private List<StudyCard> allCardList;
+    
 
     public DeckHandler() {
-        this.cardList = new ArrayList<>();
+        this.allCardList = new ArrayList<>();
     }
 
     public StudyCard pullCard() {
         Random draw = new Random();
-        int randomIndex = draw.nextInt(this.cardList.size());
+        int randomIndex = draw.nextInt(this.allCardList.size());
         
-        return this.cardList.get(randomIndex);
+        return this.allCardList.get(randomIndex);
     }
 
     public void addToDeck(String question, String answer, String difficulty) {
         StudyCard card = new StudyCard(question, answer, difficulty);
-        this.cardList.add(card);
+        this.allCardList.add(card);
     }
 
     public void shuffleDeck() {
-        Collections.shuffle(this.cardList);
+        Collections.shuffle(this.allCardList);
     }
 }
