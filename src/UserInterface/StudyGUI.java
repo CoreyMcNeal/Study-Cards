@@ -299,7 +299,7 @@ public class StudyGUI implements ActionListener {
         
     }
 
-    private void studyPreviousPressed() {
+    private void studyPreviousPressed() {                                                               // Logic for studyPreviousButton on studyPanel
         deckIndex -= 1;
 
         studyCardNumber.setText( "Card Number: " + String.valueOf(deckIndex + 1));
@@ -314,7 +314,7 @@ public class StudyGUI implements ActionListener {
         refreshFrame();
     }
 
-    private void studyNextPressed() {
+    private void studyNextPressed() {                                                                       // Logic for studyNextButton on studyPanel
         deckIndex += 1;
 
         studyCardNumber.setText( "Card Number: " + String.valueOf(deckIndex + 1));
@@ -329,7 +329,7 @@ public class StudyGUI implements ActionListener {
         refreshFrame();
     }
 
-    private void studyFlipPressed() {
+    private void studyFlipPressed() {                                                                           // Logic for studyFlipButton on studyPanel
         studyQuestionAndAnswer.setText("Answer: " + chosenDeck.get(deckIndex).getAnswer());
 
         studyExitButton.requestFocus();
@@ -387,7 +387,7 @@ public class StudyGUI implements ActionListener {
         introQuestionEntry.requestFocus();
     }
 
-    private void introShowButtonClicked() {
+    private void introShowButtonClicked() {                                                         // Shows all the current cards in a popout pane
         if (deckHandler.getAllCardList().size() == 0) {
             JOptionPane.showMessageDialog(null, "Nothing has been entered yet");
             return;

@@ -11,7 +11,7 @@ public class DeckHandler {
     private List<StudyCard> modCardList = new ArrayList<>();
     private List<StudyCard> hardCardList = new ArrayList<>();
 
-    public void addToDeck(String question, String answer, String difficulty) {
+    public void addToDeck(String question, String answer, String difficulty) {      // Creates StudyCard and decides which deck to place the object into.
         StudyCard card = new StudyCard(question, answer, difficulty);
         allCardList.add(card);
 
@@ -24,14 +24,14 @@ public class DeckHandler {
         }
     }
 
-    public void shuffleDecks() {
+    public void shuffleDecks() {                                                // Shuffles all decks of StudyCards
         Collections.shuffle(allCardList);
         Collections.shuffle(easyCardList);
         Collections.shuffle(modCardList);
         Collections.shuffle(hardCardList);
     }
 
-    public void clearLists() {
+    public void clearLists() {                                                  // Clears all decks of StudyCards
         allCardList.clear();
         easyCardList.clear();
         modCardList.clear();
