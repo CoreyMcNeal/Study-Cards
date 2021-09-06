@@ -1,18 +1,24 @@
-## Getting Started
+## Setup
+  - Terminal into the src folder and run "javac App.java"
+  - Run "java App" to start the program
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+## How to Use
+  - Enter the question and answer into the respective entry boxes
+  - Choose which difficulty the card is by using the drop down menu
+  - Add as many cards as wanted
+  
+  - Click "Show Entries" to show all current cards
+  - Click "Clear Entries" to clear all current cards
 
-## Folder Structure
+  - Choose difficulty to study by using the drop down menu
+  - Begin studying by clicking "Start Studying"
+  
+  - "Flip" to see answer shows the current cards answer
+  - "Next" continues onto the next card
+  - "Previous" goes back to the previous card
+  - "Exit to Menu" takes the interface back to the card creation panel
 
-The workspace contains two folders by default, where:
-
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
-
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
-
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
-
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+## What I Used, and What I Learned
+  - Project was mainly done to learn how to use Git through the command-line throughout the course of a project,
+    rather than through IDEs and the desktop client
+  - Java Swing Framework
