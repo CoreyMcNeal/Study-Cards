@@ -279,7 +279,6 @@ public class StudyGUI implements ActionListener {
 
         } else if (e.getSource() == introFinishedButton) {
             transitionToStudyPanel();
-            
 
         } else if (e.getSource() == studyFlipButton) {
             studyFlipPressed();
@@ -288,7 +287,7 @@ public class StudyGUI implements ActionListener {
             studyNextPressed();
 
         } else if (e.getSource() == studyPreviousbutton) {
-            //Code to go back to previous card goes here
+            studyPreviousPressed();
 
         } else if (e.getSource() == studyExitButton) {
             frame.remove(studyPanel);
@@ -296,9 +295,23 @@ public class StudyGUI implements ActionListener {
             frame.setSize(400, 800);
             introQuestionEntry.requestFocus();
             refreshFrame();
-
         }
         
+    }
+
+    private void studyPreviousPressed() {
+        deckIndex -= 1;
+
+        studyCardNumber.setText( "Card Number: " + String.valueOf(deckIndex + 1));
+        studyQuestionAndAnswer.setText("Question: " + chosenDeck.get(deckIndex).getQuestion());
+
+        if (deckIndex == 0) {
+            studyPreviousbutton.setEnabled(false);
+        }
+
+        studyNextButton.setEnabled(true);
+        studyExitButton.requestFocus();
+        refreshFrame();
     }
 
     private void studyNextPressed() {
@@ -307,24 +320,39 @@ public class StudyGUI implements ActionListener {
         studyCardNumber.setText( "Card Number: " + String.valueOf(deckIndex + 1));
         studyQuestionAndAnswer.setText("Question: " + chosenDeck.get(deckIndex).getQuestion());
 
+        if (deckIndex == (chosenDeck.size() - 1)) {
+            studyNextButton.setEnabled(false);
+        }
+
+        studyPreviousbutton.setEnabled(true);
+        studyExitButton.requestFocus();
         refreshFrame();
     }
 
     private void studyFlipPressed() {
         studyQuestionAndAnswer.setText("Answer: " + chosenDeck.get(deckIndex).getAnswer());
+
+        studyExitButton.requestFocus();
+        refreshFrame();
     }
 
     private void transitionToStudyPanel() {                         // Chooses appropriate deck and sets the studyPanel to the frame. Prepares the labels for the correct indexes as well
         cardListChooser();
+        if (chosenDeck.size() == 0) {
+            JOptionPane.showMessageDialog(null, "Chosen card set is blank.");
+            return;
+        }
+
         frame.remove(introPanel);
         frame.add(studyPanel);
         frame.setSize(600, 750);
 
         deckIndex = 0;
         studyCardNumber.setText( "Card Number: " + String.valueOf(deckIndex + 1));
-        System.out.println(chosenDeck.get(deckIndex).getQuestion());
         studyQuestionAndAnswer.setText("Question: " + chosenDeck.get(deckIndex).getQuestion());
         
+        studyPreviousbutton.setEnabled(false);
+        studyExitButton.requestFocus();
         refreshFrame();
     }
 
